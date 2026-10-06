@@ -77,8 +77,12 @@
         <xpath expr="//button[hasclass('o-mail-Chatter-activity')]/span" position="attributes">
             <attribute name="class" add="d-none d-sm-inline" separator=" " />
         </xpath>
-        <xpath expr="//button[@t-if='props.hasAttachmentPreview and state.thread.attachmentsInWebClientView.length']" position="attributes">
-            <attribute name="t-if">props.isChatterAside and props.hasAttachmentPreview and state.thread.attachmentsInWebClientView.length</attribute>
+        <!-- On vise le bouton par ce qu'il FAIT, pas par sa condition, et on
+             AJOUTE à la condition au lieu de la réécrire : le core OCB 19.0
+             l'a renommée (`showsAttachmentPopout`, oct. 2026) et l'ancien
+             xpath tuait tout formulaire à chatter (OwlError, GRB 06/10). -->
+        <xpath expr="//button[@t-on-click='popoutAttachment']" position="attributes">
+            <attribute name="t-if" add="props.isChatterAside" separator=" and "/>
         </xpath>
         <xpath expr="//button[@t-on-click='onClickSearch']" position="after">
         	<button
